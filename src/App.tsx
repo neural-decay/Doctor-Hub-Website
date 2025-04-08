@@ -22,7 +22,7 @@ import ManagerPosts from "@/pages/manager/posts"
 // Hospital Manager Pages
 import HospitalDashboard from "@/pages/hospital-manager/dashboard"
 import HospitalDoctors from "@/pages/hospital-manager/doctors"
-import HospitalPatients from "@/pages/hospital-manager/patients"
+import HospitalManagerProfile from "./pages/hospital-manager/profile"
 
 // Auth Pages
 import Login from "@/pages/auth/login"
@@ -54,8 +54,8 @@ function App() {
             {/* Hospital Manager Routes */}
             <Route path="/hospital" element={<HospitalManagerLayout />}>
               <Route index element={<HospitalDashboard />} />
-              <Route path="staff" element={<HospitalDoctors />} />
-              <Route path="patients" element={<HospitalPatients />} />
+              <Route path="doctors" element={<HospitalDoctors />} />
+              <Route path="profile" element={<HospitalManagerProfile />} />
             </Route>
           </Routes>
         </Router>

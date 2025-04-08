@@ -19,7 +19,7 @@ export function HospitalManagerHeader() {
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b bg-background px-4 md:px-6">
       <div className="flex items-center gap-2">
         <Link to="/hospital" className="flex items-center gap-2">
-          <span className="text-xl font-bold">Hospital Dashboard</span>
+          <span className="text-xl font-bold">Quản lý bệnh viện</span>
         </Link>
       </div>
       <div className="flex items-center gap-4">
