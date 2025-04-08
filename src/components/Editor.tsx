@@ -61,9 +61,7 @@ export default function Editor({
         file_picker_types: "image",
         // Sửa lỗi TypeScript cho upload handler
         images_upload_handler: (
-          blobInfo: BlobInfo,
-          progress: (percent: number) => void
-        ) => {
+          blobInfo: BlobInfo        ) => {
           return new Promise<string>((resolve) => {
             // Giả lập upload trong demo
             setTimeout(() => {
