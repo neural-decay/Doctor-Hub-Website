@@ -5,8 +5,8 @@ import { Activity, Bed, Calendar, LineChart, PieChart, Users } from "lucide-reac
 export default function HospitalDashboard() {
   return (
     <div className="space-y-4">
-      <h2 className="text-3xl font-bold tracking-tight">Hospital Dashboard</h2>
-      <p className="text-muted-foreground">Welcome to your hospital management dashboard.</p>
+      <h2 className="text-3xl font-bold tracking-tight">Quản lý bệnh viện</h2>
+      <p className="text-muted-foreground">Tổng quan</p>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>

@@ -42,7 +42,7 @@ export function ManagerSidebar({ className }: SidebarProps) {
                   className="w-full justify-start text-base py-6"
                   asChild
                 >
-                  <Link to={route.href}>
+                  <Link to={route.href} className="text-foreground">
                     <route.icon className="mr-3 h-5 w-5" />
                     {route.title}
                   </Link>
