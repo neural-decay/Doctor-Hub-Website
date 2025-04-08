@@ -15,7 +15,7 @@ import { Link } from "react-router-dom"
 import { ThemeToggle } from "@/components/theme-toogle"
 
 export function ManagerHeader() {
-  const { user, logout } = useAuth()
+  const { logout } = useAuth()
 
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b bg-background px-4 md:px-6">
