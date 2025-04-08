@@ -1,31 +1,32 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/toaster"
-import { AuthProvider } from "@/contexts/auth-context"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "@/contexts/auth-context";
 
 // Layouts
-import AdminLayout from "@/layouts/admin-layout"
-import ManagerLayout from "@/layouts/manager-layout"
-import HospitalManagerLayout from "@/layouts/hospital-manager-layout"
+import AdminLayout from "@/layouts/admin-layout";
+import ManagerLayout from "@/layouts/manager-layout";
+import HospitalManagerLayout from "@/layouts/hospital-manager-layout";
 
 // Admin Pages
-import AdminDashboard from "@/pages/admin/dashboard"
-import AdminProfile from "@/pages/admin/profile"
-import AdminPosts from "@/pages/admin/posts"
-import AdminUsers from "@/pages/admin/users"
+import AdminDashboard from "@/pages/admin/dashboard";
+import AdminProfile from "@/pages/admin/profile";
+import AdminPosts from "@/pages/admin/posts";
+import AdminUsers from "@/pages/admin/users";
 
 // Manager Pages
-import ManagerDashboard from "@/pages/manager/dashboard"
-import ManagerProfile from "@/pages/manager/profile"
-import ManagerPosts from "@/pages/manager/posts"
+import ManagerDashboard from "@/pages/manager/dashboard";
+import ManagerProfile from "@/pages/manager/profile";
+import ManagerPosts from "@/pages/manager/posts";
+import CategoryManager from "@/pages/manager/categories";
 
 // Hospital Manager Pages
-import HospitalDashboard from "@/pages/hospital-manager/dashboard"
-import HospitalDoctors from "@/pages/hospital-manager/doctors"
-import HospitalManagerProfile from "./pages/hospital-manager/profile"
+import HospitalDashboard from "@/pages/hospital-manager/dashboard";
+import HospitalDoctors from "@/pages/hospital-manager/doctors";
+import HospitalManagerProfile from "./pages/hospital-manager/profile";
 
 // Auth Pages
-import Login from "@/pages/auth/login"
+import Login from "@/pages/auth/login";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
               <Route index element={<ManagerDashboard />} />
               <Route path="profile" element={<ManagerProfile />} />
               <Route path="posts" element={<ManagerPosts />} />
+              <Route path="categories" element={<CategoryManager />} />
             </Route>
 
             {/* Hospital Manager Routes */}
@@ -62,7 +64,7 @@ function App() {
         <Toaster />
       </AuthProvider>
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;

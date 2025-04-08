@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Bell, Settings, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Bell, Settings, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,13 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useAuth } from "@/contexts/auth-context"
-import { Link } from "react-router-dom"
-import { ThemeToggle } from "@/components/theme-toogle"
+} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/contexts/auth-context";
+import { Link } from "react-router-dom";
+import { ThemeToggle } from "@/components/theme-toogle";
 
 export function ManagerHeader() {
-  const { logout } = useAuth()
+  const { logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b bg-background px-4 md:px-6">
@@ -45,17 +45,11 @@ export function ManagerHeader() {
                 Profile
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link to="/manager/profile" className="flex w-full">
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </Link>
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout}>Log out</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
     </header>
-  )
+  );
 }

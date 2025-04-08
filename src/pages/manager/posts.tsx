@@ -422,7 +422,7 @@ export default function ManagerPosts() {
               <Editor
                 initialValue={content}
                 onEditorChange={(content) => setContent(content)}
-                onInit={(evt, editor) => (editorRef.current = editor)}
+                onInit={(_evt, editor) => (editorRef.current = editor)}
               />
             </div>
 

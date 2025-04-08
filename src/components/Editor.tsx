@@ -25,7 +25,7 @@ export default function Editor({
 }: Readonly<EditorProps>) {
   return (
     <TinyMCEEditor
-      apiKey="your-tinymce-api-key" // Đăng ký miễn phí tại https://www.tiny.cloud/
+      apiKey="xmpidoyerbjra5qkr7b75c7asgefs7w9pi4k3f17f4sglstg" // Đăng ký miễn phí tại https://www.tiny.cloud/
       init={{
         height: 500,
         menubar: true,
