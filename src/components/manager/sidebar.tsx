@@ -3,7 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BarChart3, FileText } from "lucide-react";
+import {
+  BarChart3,
+  FileText,
+  ListTree,
+} from "lucide-react";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -21,6 +25,11 @@ export function ManagerSidebar({ className }: SidebarProps) {
       href: "/manager/posts",
       icon: FileText,
     },
+    {
+      title: "Quản lý danh mục",
+      href: "/manager/categories",
+      icon: ListTree,
+    },
   ];
 
   return (
@@ -31,7 +40,7 @@ export function ManagerSidebar({ className }: SidebarProps) {
             Manager Panel
           </h2>
           <ScrollArea className="h-[calc(100vh-10rem)]">
-            <div className="space-y-2">
+            <div className="space-y-1">
               {routes.map((route) => (
                 <Button
                   key={route.href}
