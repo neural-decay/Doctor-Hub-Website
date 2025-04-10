@@ -25,7 +25,7 @@ export default function Editor({
 }: Readonly<EditorProps>) {
   return (
     <TinyMCEEditor
-      apiKey="your-tinymce-api-key" // Đăng ký miễn phí tại https://www.tiny.cloud/
+      apiKey="xmpidoyerbjra5qkr7b75c7asgefs7w9pi4k3f17f4sglstg" // Đăng ký miễn phí tại https://www.tiny.cloud/
       init={{
         height: 500,
         menubar: true,
@@ -61,9 +61,7 @@ export default function Editor({
         file_picker_types: "image",
         // Sửa lỗi TypeScript cho upload handler
         images_upload_handler: (
-          blobInfo: BlobInfo,
-          progress: (percent: number) => void
-        ) => {
+          blobInfo: BlobInfo        ) => {
           return new Promise<string>((resolve) => {
             // Giả lập upload trong demo
             setTimeout(() => {
