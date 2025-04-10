@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Activity, Bed, Calendar, LineChart, PieChart, Users } from "lucide-react"
+import { Activity, HeartHandshake, Wallet, LineChart, PieChart, Users, Stethoscope } from "lucide-react"
 
 export default function HospitalDashboard() {
   return (
@@ -11,8 +11,8 @@ export default function HospitalDashboard() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Patients</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Số bác sĩ tại bệnh viện</CardTitle>
+            <Stethoscope className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">2,345</div>
@@ -21,8 +21,8 @@ export default function HospitalDashboard() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Staff Members</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Tổng số dịch vụ hiện tại của bệnh viện</CardTitle>
+            <HeartHandshake className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">120</div>
@@ -31,8 +31,8 @@ export default function HospitalDashboard() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Available Beds</CardTitle>
-            <Bed className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Tổng số người dùng đã sử dụng dịch vụ</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">45</div>
@@ -41,8 +41,8 @@ export default function HospitalDashboard() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Appointments Today</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Tổng doanh thu</CardTitle>
+            <Wallet className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">78</div>
@@ -55,15 +55,11 @@ export default function HospitalDashboard() {
         <TabsList>
           <TabsTrigger value="overview">
             <Activity className="mr-2 h-4 w-4" />
-            Hospital Status
+            Dịch vụ
           </TabsTrigger>
           <TabsTrigger value="analytics">
             <LineChart className="mr-2 h-4 w-4" />
-            Patient Analytics
-          </TabsTrigger>
-          <TabsTrigger value="reports">
-            <PieChart className="mr-2 h-4 w-4" />
-            Department Reports
+            Doanh thu
           </TabsTrigger>
         </TabsList>
         <TabsContent value="overview" className="space-y-4">
@@ -85,17 +81,6 @@ export default function HospitalDashboard() {
             </CardHeader>
             <CardContent className="h-[300px] flex items-center justify-center">
               <p className="text-muted-foreground">Patient analytics visualization would go here</p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="reports" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Department Reports</CardTitle>
-              <CardDescription>Performance metrics by department.</CardDescription>
-            </CardHeader>
-            <CardContent className="h-[300px] flex items-center justify-center">
-              <p className="text-muted-foreground">Department reports visualization would go here</p>
             </CardContent>
           </Card>
         </TabsContent>

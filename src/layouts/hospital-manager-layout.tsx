@@ -20,12 +20,14 @@ export default function HospitalManagerLayout() {
   return (
     <div className="flex min-h-screen flex-col">
       <HospitalManagerHeader />
-      <div className="flex flex-1">
-        <aside className="hidden w-80 border-r md:block">
+      <div className="flex flex-1 overflow-hidden">
+        <aside className="hidden w-80 border-r md:block overflow-y-auto">
           <HospitalManagerSidebar />
         </aside>
-        <main className="flex-1 p-6">
-          <Outlet />
+        <main className="flex-1 overflow-y-auto p-6">
+          <div className="mx-auto max-w-7xl">
+            <Outlet />
+          </div>
         </main>
       </div>
       <Footer />

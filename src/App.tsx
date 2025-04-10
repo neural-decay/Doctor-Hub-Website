@@ -23,9 +23,15 @@ import ManagerPosts from "@/pages/manager/posts"
 import HospitalDashboard from "@/pages/hospital-manager/dashboard"
 import HospitalDoctors from "@/pages/hospital-manager/doctors"
 import HospitalManagerProfile from "./pages/hospital-manager/profile"
-
+import HospitalInformation from "./pages/hospital-manager/information"
+import HospitalFaculties from "./pages/hospital-manager/faculties"
+import HospitalServices from "./pages/hospital-manager/services"
+import HospitalAppointments from "./pages/hospital-manager/appointments"
+import HospitalRevenue from "./pages/hospital-manager/revenue"
 // Auth Pages
 import Login from "@/pages/auth/login"
+
+
 
 function App() {
   return (
@@ -54,8 +60,13 @@ function App() {
             {/* Hospital Manager Routes */}
             <Route path="/hospital" element={<HospitalManagerLayout />}>
               <Route index element={<HospitalDashboard />} />
+              <Route path="information" element={<HospitalInformation />} />
+              <Route path="faculties" element={<HospitalFaculties />} />
               <Route path="doctors" element={<HospitalDoctors />} />
+              <Route path="services" element={<HospitalServices />} />
               <Route path="profile" element={<HospitalManagerProfile />} />
+              <Route path="appointments" element={<HospitalAppointments />} />
+              <Route path="revenue" element={<HospitalRevenue />} />
             </Route>
           </Routes>
         </Router>

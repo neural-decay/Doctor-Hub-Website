@@ -42,7 +42,7 @@ export function HospitalManagerSidebar({ className }: SidebarProps) {
     },
     {
       title: "Doanh thu",
-      href: "/hospital/incomes",
+      href: "/hospital/revenue",
       icon: Wallet,
     },
   ];
