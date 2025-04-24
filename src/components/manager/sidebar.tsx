@@ -21,14 +21,14 @@ export function ManagerSidebar({ className }: SidebarProps) {
       icon: BarChart3,
     },
     {
-      title: "Quản lý bài viết",
-      href: "/manager/posts",
-      icon: FileText,
-    },
-    {
       title: "Quản lý danh mục",
       href: "/manager/categories",
       icon: ListTree,
+    },
+    {
+      title: "Quản lý bài viết",
+      href: "/manager/posts",
+      icon: FileText,
     },
   ];
 
