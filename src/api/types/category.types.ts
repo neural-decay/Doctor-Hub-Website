@@ -2,7 +2,7 @@ export interface Category {
   categoryId: number;
   categoryName: string;
   slug: string;
-  urlImage?: string;
+  imageUrl?: string;
   lft: number;
   rgt: number;
   parentId: number | null;
@@ -29,9 +29,9 @@ export interface CategoryResponse {
   categoryId: number;
   categoryName: string;
   slug: string;
-  urlImage: string;
+  imageUrl: string;
   lft: number;
   rgt: number;
-  parentId: number;
+  parentId: number | null;
   level: number;
 }
