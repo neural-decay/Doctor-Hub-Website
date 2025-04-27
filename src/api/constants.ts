@@ -10,11 +10,10 @@ export const ENDPOINTS = {
   },
   CATEGORIES: {
     BASE: "/categories",
-    BY_ID: (id: number) => `/categories/${id}`,
     TREE: "/categories/tree",
+    BY_ID: (id: number) => `/categories/${id}`,
     CHILDREN: (id: number) => `/categories/${id}/children`,
     PATH: (id: number) => `categories/${id}/path`,
-
   },
   POSTS: {
     BASE: "/posts",
