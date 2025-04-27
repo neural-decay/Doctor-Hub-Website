@@ -5,8 +5,6 @@ import {
   CategoryUpdateDto,
 } from "../api/types/category.types";
 import { categoryService } from "../api/services/category.service";
-import { useToast } from "./use-toast";
-
 export function useCategoryTree() {
   const [categoryTree, setCategoryTree] = useState<Category[]>([]);
   const [expandedCategories, setExpandedCategories] = useState<Set<number>>(
@@ -14,8 +12,8 @@ export function useCategoryTree() {
   );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { toast } = useToast();
 
+  // Fetch Category tree
   const fetchCategoryTree = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -30,15 +28,10 @@ export function useCategoryTree() {
     } catch (err: any) {
       console.error("Error fetching category tree:", err);
       setError(err?.message || "Failed to fetch categories");
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to load category structure",
-      });
     } finally {
       setIsLoading(false);
     }
-  }, [toast]);
+  }, []);
 
   // Expand and collapse categories
   const toggleExpandCategory = useCallback((categoryId: number) => {
@@ -57,66 +50,39 @@ export function useCategoryTree() {
     async (category: CategoryCreateDto, image?: File) => {
       try {
         await categoryService.create(category, image);
-        toast({
-          title: "Success",
-          description: "Category created successfully",
-        });
         fetchCategoryTree(); // Reload tree
       } catch (err: any) {
         console.error("Error creating category:", err);
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: err?.message || "Failed to create category",
-        });
         throw err;
       }
     },
-    [fetchCategoryTree, toast]
+    [fetchCategoryTree]
   );
 
   const updateCategory = useCallback(
     async (id: number, category: CategoryUpdateDto, image?: File) => {
       try {
         await categoryService.update(id, category, image);
-        toast({
-          title: "Success",
-          description: "Category updated successfully",
-        });
         fetchCategoryTree(); // Reload tree
       } catch (err: any) {
         console.error("Error updating category:", err);
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: err?.message || "Failed to update category",
-        });
         throw err;
       }
     },
-    [fetchCategoryTree, toast]
+    [fetchCategoryTree]
   );
 
   const deleteCategory = useCallback(
     async (id: number) => {
       try {
         await categoryService.delete(id);
-        toast({
-          title: "Success",
-          description: "Category deleted successfully",
-        });
         fetchCategoryTree(); // reload tree
       } catch (err: any) {
         console.error("Error deleting category:", err);
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: err?.message || "Failed to delete category",
-        });
         throw err;
       }
     },
-    [fetchCategoryTree, toast]
+    [fetchCategoryTree]
   );
 
   // Reload data
