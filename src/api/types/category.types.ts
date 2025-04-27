@@ -14,14 +14,12 @@ export interface Category {
 export interface CategoryCreateDto {
   categoryName: string;
   slug: string;
-  imageUrl?: string;
   parentId: number | null;
 }
 
 export interface CategoryUpdateDto {
   categoryName?: string;
   slug?: string;
-  imageUrl?: string;
 }
 
 // Response DTOs
