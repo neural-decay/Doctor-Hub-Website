@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { useCategoryTree } from "@/hooks/use-category-tree";
 import { Category, CategoryCreateDto } from "@/api/types/category.types";
+import { ImageUploader } from "@/components/image-uploader";
 
 export default function CategoryManager() {
   // Use custom hook to manage category data
@@ -54,9 +55,10 @@ export default function CategoryManager() {
     categoryName: "",
     slug: "",
     parentId: null as number | null,
-    imageUrl: "",
   });
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const { toast } = useToast();
+  const [isUploading, setIsUploading] = useState(false);
 
   // Since the root (level 0) is guaranteed to exist by the backend,
   // we need to get the actual visible categories (level 1 and above)
@@ -116,17 +118,21 @@ export default function CategoryManager() {
   // Handle create/edit category
   const handleSaveCategory = async () => {
     try {
+      setIsUploading(true);
       if (editingCategory) {
         // Update existing category
-        await updateCategory(editingCategory.categoryId, {
-          categoryName: newCategory.categoryName,
-          slug: newCategory.slug,
-          imageUrl: newCategory.imageUrl,
-        });
+        await updateCategory(
+          editingCategory.categoryId,
+          {
+            categoryName: newCategory.categoryName,
+            slug: newCategory.slug,
+          },
+          selectedImage || undefined // Convert null to undefined
+        );
 
         toast({
           title: "Success",
-          description: "Category has been updated",
+          description: "Update category successfully",
         });
       } else {
         // Create new category
@@ -134,14 +140,13 @@ export default function CategoryManager() {
           categoryName: newCategory.categoryName,
           slug: newCategory.slug || generateSlug(newCategory.categoryName),
           parentId: newCategory.parentId || categoryTree[0]?.categoryId || 1,
-          imageUrl: newCategory.imageUrl,
         };
 
-        await addCategory(categoryData);
+        await addCategory(categoryData, selectedImage || undefined); // Convert null to undefined
 
         toast({
           title: "Success",
-          description: "New category has been created",
+          description: "New category created succesfully",
         });
       }
 
@@ -150,9 +155,11 @@ export default function CategoryManager() {
       console.error("Error saving category:", error);
       toast({
         variant: "destructive",
-        title: "Error",
-        description: error?.message || "Could not save category",
+        title: "Lỗi",
+        description: error?.message || "Cannot save category",
       });
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -160,21 +167,21 @@ export default function CategoryManager() {
   const handleDeleteCategory = async (categoryId: number) => {
     if (
       confirm(
-        "Are you sure you want to delete this category? All subcategories will also be deleted."
+        "Bạn có chắc chắn muốn xóa danh mục này? Tất cả danh mục con cũng sẽ bị xóa."
       )
     ) {
       try {
         await deleteCategory(categoryId);
         toast({
           title: "Success",
-          description: "Category has been deleted",
+          description: "Delete category sucessfully",
         });
       } catch (error: any) {
         console.error("Error deleting category:", error);
         toast({
           variant: "destructive",
-          title: "Error",
-          description: error?.message || "Could not delete category",
+          title: "Lỗi",
+          description: error?.message || "Cannot delete category",
         });
       }
     }
@@ -188,8 +195,8 @@ export default function CategoryManager() {
       categoryName: category.categoryName,
       slug: category.slug,
       parentId: category.parentId,
-      imageUrl: category.imageUrl || "",
     });
+    setSelectedImage(null); // Reset selected image when editing
     setIsDialogOpen(true);
   };
 
@@ -201,8 +208,8 @@ export default function CategoryManager() {
       categoryName: "",
       slug: "",
       parentId: parent ? parent.categoryId : null,
-      imageUrl: "",
     });
+    setSelectedImage(null); // Reset selected image when creating
     setIsDialogOpen(true);
   };
 
@@ -214,8 +221,8 @@ export default function CategoryManager() {
       categoryName: "",
       slug: "",
       parentId: categoryTree[0]?.categoryId || 1, // Use the hidden root ID
-      imageUrl: "",
     });
+    setSelectedImage(null); // Reset selected image when creating root
     setIsDialogOpen(true);
   };
 
@@ -249,8 +256,8 @@ export default function CategoryManager() {
       categoryName: "",
       slug: "",
       parentId: null,
-      imageUrl: "",
     });
+    setSelectedImage(null);
   };
 
   // Render category tree with visual hierarchy
@@ -308,6 +315,17 @@ export default function CategoryManager() {
                 </div>
               )}
             </div>
+
+            {/* Category image thumbnail (if exists) */}
+            {category.imageUrl && (
+              <div className="w-8 h-8 rounded-md overflow-hidden flex-shrink-0 mr-1">
+                <img
+                  src={category.imageUrl}
+                  alt={category.categoryName}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
 
             {/* Category name with slug */}
             <div className="truncate">
@@ -381,9 +399,7 @@ export default function CategoryManager() {
     <div className="space-y-4">
       {/* Page header */}
       <div>
-        <h2 className="text-3xl font-bold tracking-tight">
-          Quản lý danh mục
-        </h2>
+        <h2 className="text-3xl font-bold tracking-tight">Quản lý danh mục</h2>
         <p className="text-muted-foreground">
           Tạo và quản lý các danh mục của website
         </p>
@@ -459,7 +475,7 @@ export default function CategoryManager() {
             </div>
           ) : visibleCategories.length === 0 ? (
             <div className="py-8 text-center text-muted-foreground">
-              <p>No categories yet. Add a root category to get started.</p>
+              <p>Chưa có danh mục nào. Hãy thêm danh mục gốc.</p>
             </div>
           ) : (
             <div className="category-tree">
@@ -481,14 +497,14 @@ export default function CategoryManager() {
           <DialogHeader>
             <DialogTitle>
               {editingCategory
-                ? "Edit Category"
+                ? "Chỉnh sửa danh mục"
                 : parentCategory
-                ? `Add Subcategory to "${parentCategory.categoryName}"`
+                ? `Thêm danh mục con cho "${parentCategory.categoryName}"`
                 : "Thêm danh mục gốc"}
             </DialogTitle>
             <DialogDescription>
               {editingCategory
-                ? "Edit category information."
+                ? "Chỉnh sửa thông tin danh mục."
                 : "Điền các thông tin để tạo danh mục mới"}
             </DialogDescription>
           </DialogHeader>
@@ -500,7 +516,7 @@ export default function CategoryManager() {
                 id="name"
                 value={newCategory.categoryName}
                 onChange={handleNameChange}
-                placeholder="Enter category name"
+                placeholder="Nhập tên danh mục"
               />
             </div>
 
@@ -512,7 +528,7 @@ export default function CategoryManager() {
                 onChange={(e) =>
                   setNewCategory({ ...newCategory, slug: e.target.value })
                 }
-                placeholder="category-slug"
+                placeholder="ten-danh-muc"
               />
               <p className="text-xs text-muted-foreground">
                 Slug sẽ được sử dụng làm URL danh mục
@@ -520,14 +536,11 @@ export default function CategoryManager() {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="imageUrl">Image URL</Label>
-              <Input
-                id="imageUrl"
-                value={newCategory.imageUrl || ""}
-                onChange={(e) =>
-                  setNewCategory({ ...newCategory, imageUrl: e.target.value })
-                }
-                placeholder="https://example.com/image.jpg"
+              <Label>Hình ảnh danh mục</Label>
+              <ImageUploader
+                existingImageUrl={editingCategory?.imageUrl}
+                onChange={(file) => setSelectedImage(file)}
+                isUploading={isUploading}
               />
             </div>
           </div>
@@ -536,8 +549,17 @@ export default function CategoryManager() {
             <Button variant="outline" onClick={() => resetFormAndCloseDialog()}>
               Huỷ
             </Button>
-            <Button onClick={handleSaveCategory}>
-              {editingCategory ? "Update" : "Tạo"}
+            <Button onClick={handleSaveCategory} disabled={isUploading}>
+              {isUploading ? (
+                <span className="flex items-center gap-1">
+                  <span className="h-4 w-4 border-2 border-current border-t-transparent animate-spin rounded-full" />
+                  {editingCategory ? "Đang cập nhật..." : "Đang tạo..."}
+                </span>
+              ) : editingCategory ? (
+                "Cập nhật"
+              ) : (
+                "Tạo"
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>
