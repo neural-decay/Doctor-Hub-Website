@@ -17,7 +17,7 @@ export const categoryService = {
   },
 
   getTree: async (): Promise<Category[]> => {
-    const response = await apiClient.get<ApiResponse<Category[]>> (
+    const response = await apiClient.get<ApiResponse<Category[]>>(
       ENDPOINTS.CATEGORIES.TREE
     );
     return response.data.result;
@@ -44,21 +44,88 @@ export const categoryService = {
     return response.data.result;
   },
 
-  create: async (category: CategoryCreateDto): Promise<CategoryResponse> => {
+  create: async (
+    category: CategoryCreateDto,
+    image?: File
+  ): Promise<CategoryResponse> => {
+    // if no image uploaded, send request as usual
+    if (!image) {
+      const response = await apiClient.post<ApiResponse<CategoryResponse>>(
+        ENDPOINTS.CATEGORIES.BASE,
+        category
+      );
+      return response.data.result;
+    }
+
+    if (!image.type.startsWith("image/")) {
+      throw new Error("Just image file is allowed");
+    }
+
+    // Use form data to upload files
+    const formData = new FormData();
+
+    // Add JSON of category into formdata
+    formData.append(
+      "categoryData",
+      new Blob([JSON.stringify(category)], {
+        type: "application/json",
+      })
+    );
+
+    // Add image
+    formData.append("image", image);
     const response = await apiClient.post<ApiResponse<CategoryResponse>>(
       ENDPOINTS.CATEGORIES.BASE,
-      category
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
+
     return response.data.result;
   },
 
   update: async (
     id: number,
-    category: CategoryUpdateDto
+    category: CategoryUpdateDto,
+    image?: File
   ): Promise<CategoryResponse> => {
+    // if no image uploaded, send request as usual
+    if (!image) {
+      const response = await apiClient.put<ApiResponse<CategoryResponse>>(
+        `${ENDPOINTS.CATEGORIES.BASE}/${id}`,
+        category
+      );
+      return response.data.result;
+    }
+
+    if (!image.type.startsWith("image/")) {
+      throw new Error("Just image file is allowed");
+    }
+
+    // Use form data to upload files
+    const formData = new FormData();
+
+    // Add JSON of category into formdata
+    formData.append(
+      "categoryData",
+      new Blob([JSON.stringify(category)], {
+        type: "application/json",
+      })
+    );
+
+    // Add image
+    formData.append("image", image);
     const response = await apiClient.put<ApiResponse<CategoryResponse>>(
       `${ENDPOINTS.CATEGORIES.BASE}/${id}`,
-      category
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return response.data.result;
   },
